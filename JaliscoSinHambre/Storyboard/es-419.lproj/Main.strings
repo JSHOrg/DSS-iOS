@@ -1,0 +1,15 @@
+
+/* Class = "UINavigationItem"; title = "Agenda de contactos"; ObjectID = "1DP-XH-OJM"; */
+"1DP-XH-OJM.title" = "Agenda de contactos";
+
+/* Class = "UINavigationItem"; title = "Acopio"; ObjectID = "QU5-Gh-Yat"; */
+"QU5-Gh-Yat.title" = "Acopio";
+
+/* Class = "UINavigationItem"; title = "Inicio"; ObjectID = "V7V-Qc-BGH"; */
+"V7V-Qc-BGH.title" = "Inicio";
+
+/* Class = "UINavigationItem"; title = "Mapa"; ObjectID = "hQa-4o-qvX"; */
+"hQa-4o-qvX.title" = "Mapa";
+
+/* Class = "UINavigationItem"; title = "Notificaciones"; ObjectID = "xf3-a3-z72"; */
+"xf3-a3-z72.title" = "Notificaciones";
