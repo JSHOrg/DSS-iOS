@@ -59,6 +59,7 @@
 		84C620EF20E6ACF90096B720 /* CentrosAcopio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C620EE20E6ACF90096B720 /* CentrosAcopio.swift */; };
 		84C620F120E6AEAC0096B720 /* CentrosAcopioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C620F020E6AEAC0096B720 /* CentrosAcopioCell.swift */; };
 		84C620F320E6B6640096B720 /* MapaAcopioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C620F220E6B6640096B720 /* MapaAcopioCell.swift */; };
+		84C72873218A26A00013A0C2 /* AñadirBenefactorVC+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C72872218A26A00013A0C2 /* AñadirBenefactorVC+Keyboard.swift */; };
 		84CF7D562073F82300A02CE9 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CF7D552073F82300A02CE9 /* FeedCell.swift */; };
 		84D30A7C20EBD4E000C5873D /* InfoContactoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D30A7B20EBD4E000C5873D /* InfoContactoVC.swift */; };
 		84D30A7E20EBE88F00C5873D /* DetellaContactosVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D30A7D20EBE88F00C5873D /* DetellaContactosVC+Extension.swift */; };
@@ -89,6 +90,9 @@
 		84E753C120F674CE009C1110 /* SolicitudRecoleccionVCExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E753C020F674CE009C1110 /* SolicitudRecoleccionVCExtension.swift */; };
 		84E753C320F6756C009C1110 /* OfertaDonativoVCExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E753C220F6756C009C1110 /* OfertaDonativoVCExtension.swift */; };
 		84E753C620F68B5F009C1110 /* SeccionAgendaBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E753C520F68B5F009C1110 /* SeccionAgendaBar.swift */; };
+		84F524D421877A7F00A905BF /* AñadirBenefactorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F524D321877A7F00A905BF /* AñadirBenefactorVC.swift */; };
+		84F524D6218A18DC00A905BF /* BenefactoresVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F524D5218A18DC00A905BF /* BenefactoresVC+Extension.swift */; };
+		84F524D8218A192F00A905BF /* AñadirBenefactorVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F524D7218A192F00A905BF /* AñadirBenefactorVC+Extension.swift */; };
 		84F5CEDD20EFD39600A8081E /* OfertaDonativoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F5CEDC20EFD39600A8081E /* OfertaDonativoVC.swift */; };
 		84F5CEDF20EFD48A00A8081E /* TransferenciaProductosVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F5CEDE20EFD48A00A8081E /* TransferenciaProductosVC+Extension.swift */; };
 		84F5CEE220EFD8DB00A8081E /* DetalleDonativoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F5CEE120EFD8DB00A8081E /* DetalleDonativoVC.swift */; };
@@ -149,6 +153,7 @@
 		84C620EE20E6ACF90096B720 /* CentrosAcopio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CentrosAcopio.swift; sourceTree = "<group>"; };
 		84C620F020E6AEAC0096B720 /* CentrosAcopioCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CentrosAcopioCell.swift; sourceTree = "<group>"; };
 		84C620F220E6B6640096B720 /* MapaAcopioCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapaAcopioCell.swift; sourceTree = "<group>"; };
+		84C72872218A26A00013A0C2 /* AñadirBenefactorVC+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AñadirBenefactorVC+Keyboard.swift"; sourceTree = "<group>"; };
 		84CF7D552073F82300A02CE9 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		84D30A7B20EBD4E000C5873D /* InfoContactoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoContactoVC.swift; sourceTree = "<group>"; };
 		84D30A7D20EBE88F00C5873D /* DetellaContactosVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetellaContactosVC+Extension.swift"; sourceTree = "<group>"; };
@@ -181,6 +186,9 @@
 		84E753C020F674CE009C1110 /* SolicitudRecoleccionVCExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolicitudRecoleccionVCExtension.swift; sourceTree = "<group>"; };
 		84E753C220F6756C009C1110 /* OfertaDonativoVCExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfertaDonativoVCExtension.swift; sourceTree = "<group>"; };
 		84E753C520F68B5F009C1110 /* SeccionAgendaBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeccionAgendaBar.swift; sourceTree = "<group>"; };
+		84F524D321877A7F00A905BF /* AñadirBenefactorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AñadirBenefactorVC.swift"; sourceTree = "<group>"; };
+		84F524D5218A18DC00A905BF /* BenefactoresVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BenefactoresVC+Extension.swift"; sourceTree = "<group>"; };
+		84F524D7218A192F00A905BF /* AñadirBenefactorVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AñadirBenefactorVC+Extension.swift"; sourceTree = "<group>"; };
 		84F5CEDC20EFD39600A8081E /* OfertaDonativoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfertaDonativoVC.swift; sourceTree = "<group>"; };
 		84F5CEDE20EFD48A00A8081E /* TransferenciaProductosVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransferenciaProductosVC+Extension.swift"; sourceTree = "<group>"; };
 		84F5CEE120EFD8DB00A8081E /* DetalleDonativoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetalleDonativoVC.swift; sourceTree = "<group>"; };
@@ -298,6 +306,8 @@
 			isa = PBXGroup;
 			children = (
 				84798A6B20ED329300B39320 /* BenefactoresVC.swift */,
+				84F524D5218A18DC00A905BF /* BenefactoresVC+Extension.swift */,
+				84F524D221877A5D00A905BF /* Añadir Benefactor */,
 			);
 			path = Benefactores;
 			sourceTree = "<group>";
@@ -551,6 +561,17 @@
 			path = SeccionAgendaBar;
 			sourceTree = "<group>";
 		};
+		84F524D221877A5D00A905BF /* Añadir Benefactor */ = {
+			isa = PBXGroup;
+			children = (
+				84F524D321877A7F00A905BF /* AñadirBenefactorVC.swift */,
+				84F524D7218A192F00A905BF /* AñadirBenefactorVC+Extension.swift */,
+				84C72872218A26A00013A0C2 /* AñadirBenefactorVC+Keyboard.swift */,
+			);
+			name = "Añadir Benefactor";
+			path = "Añadir Benefactor";
+			sourceTree = "<group>";
+		};
 		84F5CEDB20EFD00F00A8081E /* Oferta Donativos */ = {
 			isa = PBXGroup;
 			children = (
@@ -665,6 +686,7 @@
 				849D8C7C2062F8FF00F082D8 /* MenuUsuario.swift in Sources */,
 				848DEC022072A29400BFA872 /* MapaVC+Extension.swift in Sources */,
 				84C5B7B520C1CEFD00B3AD2D /* FeedMapaCell.swift in Sources */,
+				84F524D421877A7F00A905BF /* AñadirBenefactorVC.swift in Sources */,
 				84798A6E20ED392700B39320 /* Benefactor.swift in Sources */,
 				84C5B7B320C1BCB700B3AD2D /* MapaBancosCell.swift in Sources */,
 				84D30A7E20EBE88F00C5873D /* DetellaContactosVC+Extension.swift in Sources */,
@@ -686,11 +708,13 @@
 				84D30A7C20EBD4E000C5873D /* InfoContactoVC.swift in Sources */,
 				849D8C782062F7CC00F082D8 /* BaseCell.swift in Sources */,
 				841811C020C86DF200989A34 /* AnnotationView.swift in Sources */,
+				84C72873218A26A00013A0C2 /* AñadirBenefactorVC+Keyboard.swift in Sources */,
 				842556DF20619DC200FBE160 /* InicioVC.swift in Sources */,
 				84F5CEDF20EFD48A00A8081E /* TransferenciaProductosVC+Extension.swift in Sources */,
 				849D8C752062F52D00F082D8 /* Header.swift in Sources */,
 				849D8C732062F4EF00F082D8 /* HeaderCell.swift in Sources */,
 				84BB9A0020BF2D6F007FB686 /* BancosCell.swift in Sources */,
+				84F524D6218A18DC00A905BF /* BenefactoresVC+Extension.swift in Sources */,
 				84E7539D20F12FBD009C1110 /* AcopioDonativoCell.swift in Sources */,
 				84E753A120F130DE009C1110 /* ProcuradorDonativoCell.swift in Sources */,
 				84E753B120F3D751009C1110 /* DetalleDonativo.swift in Sources */,
@@ -705,6 +729,7 @@
 				84F5CEDD20EFD39600A8081E /* OfertaDonativoVC.swift in Sources */,
 				84BFE9D8207275F800E96B68 /* MapaVC.swift in Sources */,
 				84E753B920F54BDE009C1110 /* ProveedorCell.swift in Sources */,
+				84F524D8218A192F00A905BF /* AñadirBenefactorVC+Extension.swift in Sources */,
 				84D30A8020EBE8C200C5873D /* InfoContactoCell.swift in Sources */,
 				84C620EF20E6ACF90096B720 /* CentrosAcopio.swift in Sources */,
 				8484542720C70A9A003D1221 /* ApiConnector.swift in Sources */,
