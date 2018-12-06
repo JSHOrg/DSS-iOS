@@ -20,9 +20,9 @@ class AlertController {
         self.mensajeError = mensaje
         
         print(mensajeError!)
-        let alertController = UIAlertController(title: titulo, message: mensajeError, preferredStyle: UIAlertControllerStyle.alert)
+        let alertController = UIAlertController(title: titulo, message: mensajeError, preferredStyle: UIAlertController.Style.alert)
         
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) { (result : UIAlertAction) -> Void in
+        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { (result : UIAlertAction) -> Void in
             print("OK")
             
         }
@@ -39,14 +39,14 @@ class AlertController {
         
         print(mensajeError!)
         
-        let alertController = UIAlertController(title: nil, message: mensajeError, preferredStyle: UIAlertControllerStyle.alert)
+        let alertController = UIAlertController(title: nil, message: mensajeError, preferredStyle: UIAlertController.Style.alert)
         
-        let okAction = UIAlertAction(title: "Aceptar", style: UIAlertActionStyle.default) { (result : UIAlertAction) -> Void in
+        let okAction = UIAlertAction(title: "Aceptar", style: UIAlertAction.Style.default) { (result : UIAlertAction) -> Void in
             print("OK")
             
         }
         
-        let cancelAction = UIAlertAction(title: "Cancelar", style: UIAlertActionStyle.destructive) { (result : UIAlertAction) -> Void in
+        let cancelAction = UIAlertAction(title: "Cancelar", style: UIAlertAction.Style.destructive) { (result : UIAlertAction) -> Void in
             print("cancel")
             
         }

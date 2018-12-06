@@ -100,13 +100,13 @@ class InfoContactoVC: UIView, UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! InfoContactoCell
         
-        let attributeText = NSMutableAttributedString(string: etiquetasArr[indexPath.item], attributes: [NSAttributedStringKey.font: UIFont.robotoMediumStyle14, NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.2941176471, green: 0.2941176471, blue: 0.2941176471, alpha: 1)])
+        let attributeText = NSMutableAttributedString(string: etiquetasArr[indexPath.item], attributes: [NSAttributedString.Key.font: UIFont.robotoMediumStyle14, NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.2941176471, green: 0.2941176471, blue: 0.2941176471, alpha: 1)])
         
-        attributeText.append(NSMutableAttributedString(string: "\n\n", attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 4)]))
+        attributeText.append(NSMutableAttributedString(string: "\n\n", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 4)]))
         
         let detalle = infoContactoArr[indexPath.item]
         
-        attributeText.append(NSMutableAttributedString(string: detalle, attributes: [NSAttributedStringKey.font: UIFont.robotoRegularStyle13, NSAttributedStringKey.foregroundColor: UIColor.mainBlack()]))
+        attributeText.append(NSMutableAttributedString(string: detalle, attributes: [NSAttributedString.Key.font: UIFont.robotoRegularStyle13, NSAttributedString.Key.foregroundColor: UIColor.mainBlack()]))
         
         cell.descriptionLabel.attributedText = attributeText
         

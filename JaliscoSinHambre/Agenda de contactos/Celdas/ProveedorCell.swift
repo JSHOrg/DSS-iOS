@@ -49,9 +49,13 @@ class ProveedorCell: FeedCell {
                 if apiConnector.errorDescription != nil {
                     print(apiConnector.errorDescription!)
                     
-                    let loginController = LoginVC()
-                    let navController = UINavigationController(rootViewController: loginController)
-                    UIApplication.shared.keyWindow?.rootViewController?.present(navController, animated: true, completion: nil)
+                    if apiConnector.errorDescription == "invalid_token" {
+                        let loginController = LoginVC()
+                        let navController = UINavigationController(rootViewController: loginController)
+                        UIApplication.shared.keyWindow?.rootViewController?.present(navController, animated: true, completion: nil)
+                    } else {
+                        errorMsg = "\(apiConnector.errorDescription!)"
+                    }
                     
                 } else {
                     errorMsg = "Error al cargar datos"

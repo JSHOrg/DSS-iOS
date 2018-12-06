@@ -28,6 +28,12 @@ extension AñadirBenefactorVC {
         telefonoTextField.delegate = self
         correoTextField.delegate = self
         
+        view.addSubview(activityIndicator)
+        
+        activityIndicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor, constant: 44).isActive = true
+        activityIndicator.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: 0).isActive = true
+        activityIndicator.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        activityIndicator.widthAnchor.constraint(equalToConstant: 40).isActive = true
         
         view.addSubview(separatorView)
         
@@ -67,6 +73,7 @@ extension AñadirBenefactorVC {
         scrollView.addSubview(telefonoTextField)
         scrollView.addSubview(correoLabel)
         scrollView.addSubview(correoTextField)
+        
         
         razonSocialLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 34).isActive = true
         razonSocialLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 23).isActive = true
@@ -169,6 +176,76 @@ extension AñadirBenefactorVC {
         correoTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         
+        view.addSubview(agregarBenefactorBtn)
+        
+        agregarBenefactorBtn.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
+        agregarBenefactorBtn.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -16).isActive = true
+        agregarBenefactorBtn.heightAnchor.constraint(equalToConstant: 56).isActive = true
+        agregarBenefactorBtn.widthAnchor.constraint(equalToConstant: 56).isActive = true
+        
+        agregarBenefactorBtn.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleBenefactor)))
+        
+        if titleNavBar == "Añadir benefactor" {
+            agregarBenefactorBtn.setImage(UIImage(named: "AceptarActualizacion"), for: .normal)
+        } else {
+            agregarBenefactorBtn.setImage(UIImage(named: "Editar"), for: .normal)
+            
+            razonSocialTextField.text = detalleBenefactor.razonSocial
+            nombreContactoTextField.text = detalleBenefactor.nombreContacto
+            domicilioTextField.text = detalleBenefactor.domicilio
+            ciudadTextField.text = detalleBenefactor.ciudad
+            coloniaTextField.text = detalleBenefactor.colonia
+            estadoTextField.text = detalleBenefactor.estado
+            codigoPostalTextField.text = detalleBenefactor.cp
+            telefonoTextField.text = detalleBenefactor.telefono
+            correoTextField.text = detalleBenefactor.email
+            
+        }
+        
+    }
+    
+    @objc func handleBenefactor() {
+        
+        activityIndicator.startAnimating()
+        
+        guard let razonSocial = razonSocialTextField.text else { return }
+        guard let nombreContacto = nombreContactoTextField.text else { return }
+        guard let domicilio = domicilioTextField.text else { return }
+        guard let ciudad = ciudadTextField.text else { return }
+        guard let colonia = coloniaTextField.text else { return }
+        guard let estado = estadoTextField.text else { return }
+        guard let codigoPostal = codigoPostalTextField.text else { return }
+        guard let telefono = telefonoTextField.text else { return }
+        guard let correo = correoTextField.text else { return }
+        
+        if titleNavBar == "Añadir benefactor" {
+            
+        } else {
+            
+            apiConnector.editBenefactores(id: detalleBenefactor.id!, calle: domicilio, numero: "", ciudad: ciudad, estado: estado, colonia: colonia, cp: codigoPostal, razonSocial: razonSocial, edad: "", nombre: detalleBenefactor.nombre ?? "", completionSucces: {
+                
+                DispatchQueue.main.async{
+                    print("entra")
+                    
+                    self.activityIndicator.stopAnimating()
+                    self.navigationController?.popViewController(animated: true)
+                }
+                
+            }) { error in
+                
+                DispatchQueue.main.async{
+                    
+                    print("error editar beneficiario")
+                    
+                    let alert = alertController.alertError(titulo: nil, mensaje: "\(error)")
+                    
+                    self.present(alert, animated: true, completion: nil)
+                    
+                    self.activityIndicator.stopAnimating()
+                }
+            }
+            
+        }
         
     }
     

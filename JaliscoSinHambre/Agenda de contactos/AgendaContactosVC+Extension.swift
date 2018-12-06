@@ -51,7 +51,7 @@ extension AgendaContactosVC {
     
     func scrollToMenuIndex(menuIndex: Int) {
         let indexPath = NSIndexPath(item: menuIndex, section: 0)
-        collectionView.scrollToItem(at: indexPath as IndexPath, at: UICollectionViewScrollPosition(), animated: true)
+        collectionView.scrollToItem(at: indexPath as IndexPath, at: UICollectionView.ScrollPosition(), animated: true)
         
         seccionBar.collectionView.scrollToItem(at: indexPath as IndexPath, at: .centeredHorizontally, animated: true)
         seccionBar.collectionView.selectItem(at: indexPath as IndexPath, animated: true, scrollPosition: .centeredHorizontally)

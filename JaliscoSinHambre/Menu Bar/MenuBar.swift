@@ -41,7 +41,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         addConstraintsWithFormat(format: "V:|[v0]|", views: collectionView)
         
         let selectedIndexPath = IndexPath(item: 0, section: 0)
-        collectionView.selectItem(at: selectedIndexPath, animated: false, scrollPosition: UICollectionViewScrollPosition())
+        collectionView.selectItem(at: selectedIndexPath, animated: false, scrollPosition: UICollectionView.ScrollPosition())
         
 //        setupHorizontalBar()
     }

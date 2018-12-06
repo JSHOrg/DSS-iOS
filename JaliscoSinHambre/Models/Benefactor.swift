@@ -10,13 +10,17 @@ import Foundation
 
 struct Benefactor {
     
+    var id : Int?
+    var nombre : String?
+    var razonSocial : String?
+    var nombreContacto : String?
+    var domicilio : String?
+    var ciudad : String?
+    var colonia : String?
+    var estado : String?
+    var cp : String?
     var telefono : String?
     var email : String?
-    var fechaRegistro : String?
-    var razonSocial : String?
-    var reciboFiscal : Int?
-    var rfc : String?
-    var comentarios : String?
-    var calificacion : String?
+    var fecha : String?
     
 }

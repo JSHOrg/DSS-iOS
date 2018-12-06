@@ -11,14 +11,14 @@ import UIKit
 extension AñadirBenefactorVC {
     
     func observeKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(KeyboardShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(KeyboardHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(KeyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(KeyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     @objc func KeyboardHide(notification:NSNotification) {
         
         let userInfo = notification.userInfo!
-        let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! TimeInterval
+        let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval
         
         UIView.animate(withDuration: animationDuration) {
             let contentInset:UIEdgeInsets = UIEdgeInsets.zero
@@ -30,11 +30,11 @@ extension AñadirBenefactorVC {
     @objc func KeyboardShow(notification:NSNotification) {
         
         let userInfo = notification.userInfo!
-        let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! TimeInterval
+        let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval
         
         UIView.animate(withDuration: animationDuration) {
             
-            let keyboardFrame = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+            let keyboardFrame = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
             self.scrollView.contentInset.bottom = keyboardFrame.size.height + 40
             
         }

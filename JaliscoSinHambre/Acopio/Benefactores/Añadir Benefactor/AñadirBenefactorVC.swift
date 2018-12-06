@@ -10,6 +10,8 @@ import UIKit
 
 class AñadirBenefactorVC: UIViewController, UITextFieldDelegate {
     
+    var detalleBenefactor = Benefactor()
+    
     let separatorView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.rgb(red: 151, green: 151, blue: 151)
@@ -220,6 +222,25 @@ class AñadirBenefactorVC: UIViewController, UITextFieldDelegate {
         return textField
     }()
     
+    let agregarBenefactorBtn: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = #colorLiteral(red: 0.1294117647, green: 0.5882352941, blue: 0.3254901961, alpha: 1)
+        button.layer.cornerRadius = 28
+        button.tintColor = .white
+        return button
+    }()
+    
+    let activityIndicator: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView(style: .gray)
+        activity.translatesAutoresizingMaskIntoConstraints = false
+        activity.hidesWhenStopped = true
+        activity.color = UIColor.mainGreen()
+        return activity
+    }()
+    
+    var titleNavBar : String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -229,7 +250,7 @@ class AñadirBenefactorVC: UIViewController, UITextFieldDelegate {
         screenHeight = screensize.height
         
         setupNavigationController()
-        setupDismissButtonWithTitle(title: "Añadir benefactor")
+        setupDismissButtonWithTitle(title: titleNavBar ?? "Benefactor")
         setupViews()
         observeKeyboardNotifications()
     }

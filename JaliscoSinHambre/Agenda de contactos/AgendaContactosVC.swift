@@ -91,7 +91,7 @@ class AgendaContactosVC: UIViewController, UICollectionViewDataSource, UICollect
         heightTopBar = UIApplication.shared.statusBarFrame.height + (self.navigationController?.navigationBar.frame.height)! + 50 //UIApplication.shared.statusBarFrame.maxY + 44 + 50
         bottomBar = self.tabBarController?.tabBar.frame.height
         
-        print(heightTopBar, bottomBar!)
+        print(heightTopBar!, bottomBar!)
         return CGSize(width: view.frame.width, height: view.frame.height - heightTopBar! - bottomBar!)
     }
     

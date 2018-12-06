@@ -45,7 +45,7 @@ extension TransferenciaProductosVC {
     
     func scrollToMenuIndex(menuIndex: Int) {
         let indexPath = NSIndexPath(item: menuIndex, section: 0)
-        collectionView.scrollToItem(at: indexPath as IndexPath, at: UICollectionViewScrollPosition(), animated: true)
+        collectionView.scrollToItem(at: indexPath as IndexPath, at: UICollectionView.ScrollPosition(), animated: true)
         
         print("Entradas y salidas")
     }
@@ -60,7 +60,7 @@ extension TransferenciaProductosVC {
         let index = targetContentOffset.pointee.x / view.frame.width
         
         let indexPath = NSIndexPath(item: Int(index), section: 0)
-        menuBar.collectionView.selectItem(at: indexPath as IndexPath, animated: true, scrollPosition: UICollectionViewScrollPosition())
+        menuBar.collectionView.selectItem(at: indexPath as IndexPath, animated: true, scrollPosition: UICollectionView.ScrollPosition())
         
     }
     

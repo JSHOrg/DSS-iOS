@@ -30,7 +30,7 @@ class BenefactoresCell: FeedCell {
                         
                         let firstCharecter = ben.razonSocial?.first
                         
-                        contactoBenefactor.append(Contacto(inicial: "\(firstCharecter!)", nombreContacto: ben.razonSocial!, direccionContacto: "Correo: \(ben.email!)", beneficiariosContacto: "Registrado: \(ben.fechaRegistro!)", identificador: "Benefactor"))
+                        contactoBenefactor.append(Contacto(inicial: "\(firstCharecter!)", nombreContacto: ben.razonSocial!, direccionContacto: "Correo: \(ben.email!)", beneficiariosContacto: "Registrado: \(ben.fecha!)", identificador: "Benefactor"))
                     }
                     
                     self.activityIndicator.stopAnimating()
@@ -47,9 +47,13 @@ class BenefactoresCell: FeedCell {
                     if apiConnector.errorDescription != nil {
                         print(apiConnector.errorDescription!)
                         
-                        let loginController = LoginVC()
-                        let navController = UINavigationController(rootViewController: loginController)
-                        UIApplication.shared.keyWindow?.rootViewController?.present(navController, animated: true, completion: nil)
+                        if apiConnector.errorDescription == "invalid_token" {
+                            let loginController = LoginVC()
+                            let navController = UINavigationController(rootViewController: loginController)
+                            UIApplication.shared.keyWindow?.rootViewController?.present(navController, animated: true, completion: nil)
+                        } else {
+                            errorMsg = "\(apiConnector.errorDescription!)"
+                        }
                         
                     } else {
                         errorMsg = "Error al cargar datos"
@@ -84,14 +88,15 @@ class BenefactoresCell: FeedCell {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(contactosBancos[indexPath.item].identificador!)
-       
-        let detalleBenefactorVC = DetalleBenefactorVC()
-        detalleBenefactorVC.detalleBenefactorDict = [detalleBenefactor[indexPath.item]]
         
-        let navController = UINavigationController(rootViewController: detalleBenefactorVC)
+        let añadirBenefactorVC = AñadirBenefactorVC()
+        añadirBenefactorVC.titleNavBar = "Detalle benefactor"
+        añadirBenefactorVC.detalleBenefactor = detalleBenefactor[indexPath.row]
+        
+        let navController = UINavigationController(rootViewController: añadirBenefactorVC)
         
         UIApplication.shared.keyWindow?.rootViewController?.present(navController, animated: true, completion: nil)
+        
         
     }
     

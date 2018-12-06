@@ -14,6 +14,8 @@ extension BenefactoresVC {
         super.viewWillAppear(animated)
         
         tabBarController?.tabBar.isHidden = true
+        
+        fetchBenefactores()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -53,13 +55,14 @@ extension BenefactoresVC {
         
         collectionView.register(ContactoCell.self, forCellWithReuseIdentifier: cellId)
         
-        fetchBenefactores()
-        
     }
+    
+    
     
     @objc func handleAgregarBenefactor() {
         
         let añadirBenefactorVC = AñadirBenefactorVC()
+        añadirBenefactorVC.titleNavBar = "Añadir benefactor"
         navigationController?.pushViewController(añadirBenefactorVC, animated: true)
         
     }

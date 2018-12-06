@@ -137,6 +137,13 @@ class ApiConnector {
                 
             }
             
+            let statusCode = self.urlResponse(response: response)        //cachar el error
+            
+            if statusCode != 200 {
+                completionError()
+                return
+            }
+            
             do {
                 //                let resumen = try JSONDecoder().decode(bancoAlimentos.self, from: contactData)
                 let json = try JSONSerialization.jsonObject(with: contactData, options: JSONSerialization.ReadingOptions.mutableLeaves)
@@ -183,7 +190,7 @@ class ApiConnector {
                 let dico = json as! NSDictionary
                 
                 //Si el token es inválido
-                if let err = dico["error_description"] {
+                if let err = dico["error"] {
                     self.errorDescription = err as? String
                     completionError()
                 } else {
@@ -240,7 +247,7 @@ class ApiConnector {
                 let dico = json as! NSDictionary
                 
                 //Si el token es inválido
-                if let err = dico["error_description"] {
+                if let err = dico["error"] {
                     self.errorDescription = err as? String
                     completionError()
                 } else {
@@ -252,8 +259,12 @@ class ApiConnector {
                         let jsonCentro:Dictionary<String, AnyObject> = centroActual as! Dictionary<String, AnyObject>
                         
                         let contacto = jsonCentro["contacto"] as? NSDictionary
-
-                        arrayContactosCentrosComunitarios.append((CentrosComunitarios(nombre: jsonCentro["nombre"] as? String, fechaRegistro: jsonCentro["fechaRegistro"] as? String, habilitado: jsonCentro["habilitado"] as? Bool, identifier: jsonCentro["identifier"] as? Int, telefono: contacto!["telefono"] as? String, correo: contacto!["email"] as? String, _links: jsonCentro["_links"] as? NSDictionary, direccion: jsonCentro["direccion"] as? NSDictionary)))
+                        let bancoAlimentos = jsonCentro["bancoAlimentos"] as? NSDictionary
+                        let direccion = bancoAlimentos?["direccion"] as? NSDictionary
+                        
+                        arrayContactosCentrosComunitarios.append((CentrosComunitarios(nombre: jsonCentro["nombre"] as? String, fechaRegistro: jsonCentro["fechaRegistro"] as? String, habilitado: jsonCentro["habilitado"] as? Bool, identifier: jsonCentro["identifier"] as? Int, telefono: contacto!["telefono"] as? String, correo: contacto!["email"] as? String, _links: jsonCentro["_links"] as? NSDictionary, direccion: direccion)))
+                        
+                        //direccion ya no está dentro de la información del contacto        ******
 
                     }
                     
@@ -298,7 +309,7 @@ class ApiConnector {
                 let dico = json as! NSDictionary
                 
                 //Si el token es inválido
-                if let err = dico["error_description"] {
+                if let err = dico["error"] {
                     self.errorDescription = err as? String
                     completionError()
                 } else {
@@ -432,7 +443,9 @@ class ApiConnector {
         
         guard let url = URL(string: urlContactoBanco) else { return }
         
-        URLSession.shared.dataTask(with: url) { (data, response, err) in
+        let request = get(requestUrl: url)
+        
+        URLSession.shared.dataTask(with: request) { (data, response, err) in
             if let err = err {
                 print("Error:", err)        //poner en un alertView              *****
                 completionError()
@@ -467,7 +480,7 @@ class ApiConnector {
         
         arrayBenefactores.removeAll()
         
-        let urlBenefactores = "\(urlBase)donadores"
+        let urlBenefactores = "\(urlBase)benefactores"
         
         guard let url = URL(string: urlBenefactores) else { return }
         
@@ -492,34 +505,54 @@ class ApiConnector {
                 let dico = json as! NSDictionary
                 
                 //Si el token es inválido
-                if let err = dico["error_description"] {
+                if let err = dico["error"] {
                     self.errorDescription = err as? String
                     completionError()
                 } else {
                     
                     let _embedded = dico["_embedded"] as! NSDictionary
                     
-                    let donadores = _embedded["donadores"] as! NSArray
+                    let benefactores = _embedded["benefactores"] as! NSArray
                     
-                    for almacenActual in donadores {
+                    for almacenActual in benefactores {
                         let jsonBanco:Dictionary<String, AnyObject> = almacenActual as! Dictionary<String, AnyObject>
-
-                        let telefono = jsonBanco["telefono"] as? String
-                        let email = jsonBanco["email"] as? String
-                        let fechaRegistro = jsonBanco["fechaRegistro"] as? String
                         
-                        let fechaRegistroArr = fechaRegistro?.components(separatedBy: "T")
-                        let fechaCompletaArr = fechaRegistroArr![0].components(separatedBy: "-")
-                        let fecha = "\(fechaCompletaArr[2])/\(fechaCompletaArr[1])/\(fechaCompletaArr[0])"
+                        let razonSocial = jsonBanco["razonSocial"] as? String ?? jsonBanco["nombre"] as! String //if razonSocial is null
                         
-                        let razonSocial = jsonBanco["razonSocial"] as? String
-                        let reciboFiscal = jsonBanco["reciboFiscal"] as? Int
-                        let rfc = jsonBanco["rfc"] as? String
-                        let comentarios = jsonBanco["comentarios"] as? String
-                        let calificacion = jsonBanco["calificacion"] as? String
+                        let contacto = jsonBanco["contacto"] as? NSDictionary ?? nil
                         
-                        arrayBenefactores.append(Benefactor(telefono: telefono!, email: email!, fechaRegistro: fecha, razonSocial: razonSocial!, reciboFiscal: reciboFiscal!, rfc: rfc!, comentarios: comentarios!, calificacion: calificacion!))
-
+                        let nombreC = contacto?["nombre"] as? String ?? ""
+                        
+                        let fechaRegistro = contacto?["fechaRegistro"] as? String
+                        
+                        var fecha = String()
+                        if fechaRegistro != nil {
+                            let fechaRegistroArr = fechaRegistro?.components(separatedBy: "T")
+                            let fechaCompletaArr = fechaRegistroArr![0].components(separatedBy: "-")
+                            fecha = "\(fechaCompletaArr[2])/\(fechaCompletaArr[1])/\(fechaCompletaArr[0])"
+                        }
+                        
+                        let telefono = contacto?["telefono"] as? String ?? ""
+                        let email = contacto?["email"] as? String ?? ""
+                        
+                        let direccion = jsonBanco["direccion"] as! NSDictionary
+                        
+                        let calle = direccion["calle"] as? String
+                        let numero = direccion["numero"] as? String
+                        
+                        let domicilio = "\(calle ?? "") \(numero ?? "")"
+                        
+                        let ciudad = direccion["ciudad"] as? String
+                        let colonia = direccion["colonia"] as? String
+                        let estado = direccion["estado"] as? String
+                        let cp = direccion["cp"] as? String
+                        
+                        
+                        let id = jsonBanco["id"] as! Int
+                        let nombre = jsonBanco["nombre"] as! String
+                        
+                        arrayBenefactores.append(Benefactor(id: id, nombre: nombre, razonSocial: razonSocial, nombreContacto: nombreC, domicilio: domicilio, ciudad: ciudad!, colonia: colonia!, estado: estado!, cp: cp!, telefono: telefono, email: email, fecha: fecha))
+                        
                     }
                     
                     completionSucces(arrayBenefactores)
@@ -528,6 +561,46 @@ class ApiConnector {
             } catch let jsonErr {
                 print("Error serializing json:", jsonErr)
                 completionError()
+            }
+            
+            }.resume()
+    }
+    
+    func editBenefactores(id: Int, calle: String, numero: String, ciudad: String, estado: String, colonia: String, cp: String, razonSocial: String, edad: String, nombre: String, completionSucces: @escaping () -> Void, completionError: @escaping (String) -> ()) {
+        
+        let urlBenefactores = "\(urlBase)benefactores/\(id)"
+        
+        guard let url = URL(string: urlBenefactores) else { return }
+        
+        let json:String = "{\"direccion\" : { \"calle\" : \"\(calle)\", \"numero\" : \"\", \"ciudad\" : \"\(ciudad)\", \"estado\" : \"\(estado)\", \"latitud\" : \"\", \"longitud\" : \"\", \"colonia\" : \"\(colonia)\", \"cp\" : \"\(cp)\"}, \"nombre\" : \"\(nombre)\", \"razonSocial\" : \"\(razonSocial)\"}"
+        
+        let request = put(json: json, requestUrl: url)
+        
+        URLSession.shared.dataTask(with: request) { (data, response, err) in
+            if let err = err {
+                print("Error:", err)        //poner en un alertView              *****
+                completionError("\(err)")
+                return
+            }
+            
+            guard let contactData = data else {
+                completionError("Error, intente más tarde")
+                return
+                
+            }
+            
+            
+            if let httpStatus = response as? HTTPURLResponse , httpStatus.statusCode != 200
+            {           // check for http errors
+                print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                print("response = \(String(describing: response))")
+                
+                print("Error del servidor, intente más tarde")
+                completionError("Error del servidor, intente más tarde")
+                
+            } else {
+                
+                completionSucces()
             }
             
             }.resume()
@@ -563,7 +636,7 @@ class ApiConnector {
                 let dico = json as! NSDictionary
                 
                 //Si el token es inválido
-                if let err = dico["error_description"] {
+                if let err = dico["error"] {
                     self.errorDescription = err as? String
                     completionError()
                 } else {
@@ -735,7 +808,7 @@ class ApiConnector {
                 let dico = json as! NSDictionary
                 
                 //Si el token es inválido
-                if let err = dico["error_description"] {
+                if let err = dico["error"] {
                     self.errorDescription = err as? String
                     completionError()
                 } else {
@@ -805,7 +878,7 @@ class ApiConnector {
                 let dico = json as! NSDictionary
                 
                 //Si el token es inválido
-                if let err = dico["error_description"] {
+                if let err = dico["error"] {
                     self.errorDescription = err as? String
                     completionError()
                 } else {
@@ -924,7 +997,7 @@ class ApiConnector {
                 let dico = json as! NSDictionary
                 
                 //Si el token es inválido
-                if let err = dico["error_description"] {
+                if let err = dico["error"] {
                     self.errorDescription = err as? String
                     completionError()
                 } else {
@@ -1001,7 +1074,7 @@ class ApiConnector {
                 let dico = json as! NSDictionary
                 
                 //Si el token es inválido
-                if let err = dico["error_description"] {
+                if let err = dico["error"] {
                     self.errorDescription = err as? String
                     completionError()
                 } else {
@@ -1053,6 +1126,21 @@ class ApiConnector {
         return request
     }
     
+    // MARK: - Put
+    func put(json: String, requestUrl: URL) -> URLRequest {
+        
+        var request = URLRequest(url:requestUrl)
+        
+        request.httpMethod = "Put"
+        
+        //Agrega encabezados
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(String(describing: self.accessToken!))", forHTTPHeaderField: "Authorization")
+        request.httpBody = json.data(using: String.Encoding.utf8)
+        
+        return request
+    }
+    
     // MARK: - Get
     func get(requestUrl: URL) -> URLRequest {
         
@@ -1068,19 +1156,21 @@ class ApiConnector {
     }
     
     // MARK: - Response
-    func urlResponse(response: URLResponse?){
+    func urlResponse(response: URLResponse?) -> Int {
         //obtener la cookie
+        var statusCode = Int()
         
         //Si statusCode es diferente a 200 se originó un error y se le notificará al usuario
         if let httpStatus = response as? HTTPURLResponse , httpStatus.statusCode != 200
         {           // check for http errors
-            
+            statusCode = httpStatus.statusCode
             print("statusCode should be 200, but is \(httpStatus.statusCode)")
             print("response = \(String(describing: response))")
             //            self.statusCode = httpStatus.statusCode
             
         }
         
+        return statusCode
     }
     
 }

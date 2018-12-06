@@ -65,7 +65,7 @@ class InicioVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         self.menuCV.delegate = self
         self.menuCV.dataSource = self
         self.menuCV.register(MenuCell.self, forCellWithReuseIdentifier: cellId)
-        self.menuCV.register(HeaderCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "header")
+        self.menuCV.register(HeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
         
     }
     
@@ -97,8 +97,8 @@ class InicioVC: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
-        case UICollectionElementKindSectionHeader:
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "header", for: indexPath) as! HeaderCell
+        case UICollectionView.elementKindSectionHeader:
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header", for: indexPath) as! HeaderCell
             header.header = Header(title: "Administrador")
             header.Icon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleRegresar)))
             header.setNeedsLayout()

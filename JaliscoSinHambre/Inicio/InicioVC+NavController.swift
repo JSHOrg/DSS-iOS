@@ -116,13 +116,13 @@ extension InicioVC {
     
     func cerrarSesionAlertInicio() {
         
-        let alertController = UIAlertController(title: "Cerrar sesión", message: "¿Está seguro de cerrar sesión?", preferredStyle: UIAlertControllerStyle.alert)
+        let alertController = UIAlertController(title: "Cerrar sesión", message: "¿Está seguro de cerrar sesión?", preferredStyle: UIAlertController.Style.alert)
         
-        let okAction = UIAlertAction(title: "Aceptar", style: UIAlertActionStyle.destructive) { (result : UIAlertAction) -> Void in
+        let okAction = UIAlertAction(title: "Aceptar", style: UIAlertAction.Style.destructive) { (result : UIAlertAction) -> Void in
             Switcher.updateRootVC(identifier: "loginVc")
         }
         
-        let cancelAction = UIAlertAction(title: "Cancelar", style: UIAlertActionStyle.default) { (result : UIAlertAction) -> Void in
+        let cancelAction = UIAlertAction(title: "Cancelar", style: UIAlertAction.Style.default) { (result : UIAlertAction) -> Void in
             print("cancelar")
         }
         

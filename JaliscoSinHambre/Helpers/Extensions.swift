@@ -17,7 +17,7 @@ extension UIView {
             viewsDictionary[key] = view
         }
         
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutFormatOptions(), metrics: nil, views: viewsDictionary))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: viewsDictionary))
         
     }
 }
@@ -107,7 +107,7 @@ extension UIViewController {
         let firstButton = UIButton(type: .system)
         firstButton.setImage(#imageLiteral(resourceName: "More"), for: .normal)
         firstButton.tintColor = UIColor.mainBlack()
-        let attributedText = NSMutableAttributedString(string: "     \(titleNav)", attributes: [NSAttributedStringKey.font: UIFont.robotoMediumStyle20, NSAttributedStringKey.foregroundColor: UIColor.mainBlack()])
+        let attributedText = NSMutableAttributedString(string: "     \(titleNav)", attributes: [NSAttributedString.Key.font: UIFont.robotoMediumStyle20, NSAttributedString.Key.foregroundColor: UIColor.mainBlack()])
         firstButton.setAttributedTitle(attributedText, for: .normal)
         firstButton.frame = CGRect(x: 0, y: 0, width: 35, height: 20)
         firstButton.addTarget(self, action: #selector(handleMenu), for: .touchUpInside)
@@ -133,7 +133,7 @@ extension UIViewController {
         
         let firstButton = UIButton(type: .system)
         firstButton.setImage(#imageLiteral(resourceName: "BackButton"), for: .normal)
-        let attributedText = NSMutableAttributedString(string: "     \(title)", attributes: [NSAttributedStringKey.font: UIFont.robotoMediumStyle20, NSAttributedStringKey.foregroundColor: UIColor.mainBlack()])
+        let attributedText = NSMutableAttributedString(string: "     \(title)", attributes: [NSAttributedString.Key.font: UIFont.robotoMediumStyle20, NSAttributedString.Key.foregroundColor: UIColor.mainBlack()])
         firstButton.setAttributedTitle(attributedText, for: .normal)
         firstButton.tintColor = UIColor.mainBlack()
         firstButton.addTarget(self, action: #selector(handleDismissView), for: .touchUpInside)
@@ -144,7 +144,8 @@ extension UIViewController {
     }
     
     @objc func handleDismissView(){
-        navigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: true) //pushView
+        self.dismiss(animated: true, completion: nil)           //present
         
     }
     
@@ -177,9 +178,9 @@ extension UIViewController {
     
     func cerrarSesionAlert() {
         
-        let alertController = UIAlertController(title: "Cerrar sesión", message: "¿Está seguro de cerrar sesión?", preferredStyle: UIAlertControllerStyle.alert)
+        let alertController = UIAlertController(title: "Cerrar sesión", message: "¿Está seguro de cerrar sesión?", preferredStyle: UIAlertController.Style.alert)
         
-        let okAction = UIAlertAction(title: "Aceptar", style: UIAlertActionStyle.destructive) { (result : UIAlertAction) -> Void in
+        let okAction = UIAlertAction(title: "Aceptar", style: UIAlertAction.Style.destructive) { (result : UIAlertAction) -> Void in
            
             //whats happens? we need to present some kind of login controller
             let loginController = LoginVC()
@@ -188,7 +189,7 @@ extension UIViewController {
             
         }
         
-        let cancelAction = UIAlertAction(title: "Cancelar", style: UIAlertActionStyle.default) { (result : UIAlertAction) -> Void in
+        let cancelAction = UIAlertAction(title: "Cancelar", style: UIAlertAction.Style.default) { (result : UIAlertAction) -> Void in
             print("cancelar")
         }
         

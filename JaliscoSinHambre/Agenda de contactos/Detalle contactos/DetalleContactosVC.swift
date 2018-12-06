@@ -56,7 +56,7 @@ class DetalleContactosVC: UIView, UICollectionViewDelegate, UICollectionViewData
     }()
     
     let activityIndicator: UIActivityIndicatorView = {
-        let activity = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        let activity = UIActivityIndicatorView(style: .gray)
         activity.translatesAutoresizingMaskIntoConstraints = false
         activity.hidesWhenStopped = true
         activity.color = UIColor.mainGreen()
@@ -96,6 +96,7 @@ class DetalleContactosVC: UIView, UICollectionViewDelegate, UICollectionViewData
         
         if identificadorAgenda == "BancosAlimentos" {
             let direccionBanco = arrayContactosBancoAlimentos[indexContactos!]
+            print(arrayContactosBancoAlimentos[indexContactos!])
             guard let direccion = direccionBanco._links!["contacto"] as? NSDictionary else { return }
             guard let href = direccion["href"] as? String else { return }
             url = href

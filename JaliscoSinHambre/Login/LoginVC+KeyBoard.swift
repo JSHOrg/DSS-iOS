@@ -11,8 +11,8 @@ import UIKit
 extension LoginVC {
     
     func observeKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(KeyboardShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(KeyboardHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(KeyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(KeyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     @objc func KeyboardHide() {

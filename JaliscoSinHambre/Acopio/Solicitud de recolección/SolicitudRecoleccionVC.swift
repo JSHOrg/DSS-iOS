@@ -29,7 +29,7 @@ class SolicitudRecoleccionVC: UIViewController, UICollectionViewDelegate, UIColl
     }()
     
     let activityIndicator: UIActivityIndicatorView = {
-        let activity = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        let activity = UIActivityIndicatorView(style: .gray)
         activity.translatesAutoresizingMaskIntoConstraints = false
         activity.hidesWhenStopped = true
         activity.color = UIColor.mainGreen()
