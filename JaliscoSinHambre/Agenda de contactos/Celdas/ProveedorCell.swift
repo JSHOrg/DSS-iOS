@@ -48,6 +48,7 @@ class ProveedorCell: FeedCell {
                 
                 if apiConnector.errorDescription != nil {
                     print(apiConnector.errorDescription!)
+                    errorMsg = apiConnector.errorDescription ?? "Error"
                     
                     if apiConnector.errorDescription == "invalid_token" {
                         let loginController = LoginVC()

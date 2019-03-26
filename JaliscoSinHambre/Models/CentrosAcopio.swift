@@ -10,7 +10,12 @@ import Foundation
 
 struct CentrosAcopio {
     
-    var bancosAlimentos : NSDictionary?
+    var nombre : String?
+    var fechaRegistro : String?
+    var habilitado : Bool?
+    var identifier : Int?
+    var telefono : String?
+    var correo : String?
     var _links : NSDictionary?
     var direccion : NSDictionary?
     

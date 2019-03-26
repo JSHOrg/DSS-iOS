@@ -19,24 +19,22 @@ class MapaAcopioCell: FeedMapaCell {
         
         for direccionCentroAcopio in arrayContactosCentrosAcopio {
             
-            let dir = direccionCentroAcopio.bancosAlimentos!["direccion"] as? NSDictionary
+            guard let calle = direccionCentroAcopio.direccion!["calle"] as? NSString else { return }
+            let numero = direccionCentroAcopio.direccion!["numero"] as? String
+            let ciudad = direccionCentroAcopio.direccion!["cuidad"] as? String
+            let estado = direccionCentroAcopio.direccion!["estado"] as? String
+            let latitud = direccionCentroAcopio.direccion!["latitud"] as? NSString
+            let longitud = direccionCentroAcopio.direccion!["longitud"] as? NSString
+            let colonia = direccionCentroAcopio.direccion!["colonia"] as? String
+            let cp = direccionCentroAcopio.direccion!["cp"] as? String
             
-            guard let calle = dir!["calle"] as? NSString else { return }
-            let numero = dir!["numero"] as? String
-            let ciudad = dir!["cuidad"] as? String
-            let estado = dir!["estado"] as? String
-            let latitud = dir!["latitud"] as? NSString
-            let longitud = dir!["longitud"] as? NSString
-            let colonia = dir!["colonia"] as? String
-            let cp = dir!["cp"] as? String
+            guard let nombre = direccionCentroAcopio.nombre else { return }
+            let nombreArr = nombre.components(separatedBy: " ")
+            let segundaInicial = nombreArr.last?.first
             
-            let nombre = direccionCentroAcopio.bancosAlimentos!["nombre"] as? String
-            let nombreArr = nombre?.components(separatedBy: " ")
-            let segundaInicial = nombreArr?.last?.first
+            let iniciales = "\(String(describing: nombreArr[0].first!))\(String(describing: segundaInicial!))"  //.key.first
             
-            let iniciales = "\(String(describing: nombreArr![0].first!))\(String(describing: segundaInicial!))"  //.key.first
-            
-            self.contactos.append(Contacto(inicial: "\(iniciales.uppercased())", nombreContacto: nombre, direccionContacto: "Calle: \(calle) #\(numero ?? "")", beneficiariosContacto: "CP: \(cp ?? "")", identificador: "MapaBancosAlimentos"))
+            self.contactos.append(Contacto(inicial: "\(iniciales.uppercased())", nombreContacto: direccionCentroAcopio.nombre, direccionContacto: "Calle: \(calle) #\(numero ?? "")", beneficiariosContacto: "CP: \(cp ?? "")", identificador: "MapaBancosAlimentos"))
             
             arrayMapaCentrosDeAcopio.append(MapaBancosDeAlimentos(calle: calle as String, numero: numero, ciudad: ciudad, estado: estado, latitud: latitud, longitud:longitud, colonia: colonia, cp: cp))
             
@@ -46,7 +44,7 @@ class MapaAcopioCell: FeedMapaCell {
             guard let lat = latitud else { return }
             guard let lon = longitud else { return }
             
-            self.addAnnotation(lat: lat, lon: lon, nombre: nombre!, direccion: direccion, iniciales: iniciales)
+            self.addAnnotation(lat: lat, lon: lon, nombre: nombre, direccion: direccion, iniciales: iniciales)
             
             
         }

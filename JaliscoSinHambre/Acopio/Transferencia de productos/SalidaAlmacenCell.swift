@@ -55,10 +55,13 @@ class SalidaAlmacenCell: FeedCell {
                 
                 if apiConnector.errorDescription != nil {
                     print(apiConnector.errorDescription!)
+                    errorMsg = apiConnector.errorDescription ?? "Error"
                     
-                    let loginController = LoginVC()
-                    let navController = UINavigationController(rootViewController: loginController)
-                    UIApplication.shared.keyWindow?.rootViewController?.present(navController, animated: true, completion: nil)
+                    if apiConnector.errorDescription == "invalid_token" {
+                        let loginController = LoginVC()
+                        let navController = UINavigationController(rootViewController: loginController)
+                        UIApplication.shared.keyWindow?.rootViewController?.present(navController, animated: true, completion: nil)
+                    }
                     
                 } else {
                     errorMsg = "Error al cargar datos"

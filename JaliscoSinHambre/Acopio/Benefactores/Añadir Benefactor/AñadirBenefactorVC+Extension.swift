@@ -190,6 +190,7 @@ extension AñadirBenefactorVC {
         } else {
             agregarBenefactorBtn.setImage(UIImage(named: "Editar"), for: .normal)
             
+            print("benefactor id", detalleBenefactor.id)
             razonSocialTextField.text = detalleBenefactor.razonSocial
             nombreContactoTextField.text = detalleBenefactor.nombreContacto
             domicilioTextField.text = detalleBenefactor.domicilio
@@ -218,11 +219,40 @@ extension AñadirBenefactorVC {
         guard let telefono = telefonoTextField.text else { return }
         guard let correo = correoTextField.text else { return }
         
+        if (razonSocial == "") || (nombreContacto == "") || (domicilio == "") || (ciudad == "") || (colonia == "") || (estado == "") || (codigoPostal == "") || (telefono == "") || (correo == "") {
+            
+            let alert = alertController.alertError(titulo: nil, mensaje: "Campos vacíos")
+            self.present(alert, animated: true, completion: nil)
+            self.activityIndicator.stopAnimating()
+            
+            return
+        }
+        
         if titleNavBar == "Añadir benefactor" {
+            
+            apiConnector.newBenefactores(id: 0, calle: domicilio, numero: "", ciudad: ciudad, estado: estado, colonia: colonia, cp: codigoPostal, razonSocial: razonSocial, edad: "", nombre: nombreContacto, telefono: telefono, correo: correo, completionSucces: {
+                DispatchQueue.main.async{
+                    print("entra")
+                    
+                    self.activityIndicator.stopAnimating()
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }, completionError: { (error) in
+                DispatchQueue.main.async{
+                    
+                    print("error agregar beneficiario")
+                    
+                    let alert = alertController.alertError(titulo: nil, mensaje: "\(error)")
+                    
+                    self.present(alert, animated: true, completion: nil)
+                    
+                    self.activityIndicator.stopAnimating()
+                }
+            })
             
         } else {
             
-            apiConnector.editBenefactores(id: detalleBenefactor.id!, calle: domicilio, numero: "", ciudad: ciudad, estado: estado, colonia: colonia, cp: codigoPostal, razonSocial: razonSocial, edad: "", nombre: detalleBenefactor.nombre ?? "", completionSucces: {
+            apiConnector.editBenefactores(id: detalleBenefactor.id!, calle: domicilio, numero: "", ciudad: ciudad, estado: estado, colonia: colonia, cp: codigoPostal, razonSocial: razonSocial, edad: "", nombre: nombreContacto, telefono: telefono, correo: correo, completionSucces: {
                 
                 DispatchQueue.main.async{
                     print("entra")

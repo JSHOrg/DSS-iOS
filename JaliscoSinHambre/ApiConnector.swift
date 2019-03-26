@@ -64,7 +64,7 @@ class ApiConnector {
         
         guard let url = URL(string: jsonUrlString) else { return }
         
-        let request = post(json: json, requestUrl: url)
+        let request = post(json: json, requestUrl: url, isLogin: true)
         
         URLSession.shared.dataTask(with: request) { (data, response, err) in
             //perhaps check err
@@ -259,8 +259,7 @@ class ApiConnector {
                         let jsonCentro:Dictionary<String, AnyObject> = centroActual as! Dictionary<String, AnyObject>
                         
                         let contacto = jsonCentro["contacto"] as? NSDictionary
-                        let bancoAlimentos = jsonCentro["bancoAlimentos"] as? NSDictionary
-                        let direccion = bancoAlimentos?["direccion"] as? NSDictionary
+                        let direccion = jsonCentro["direccion"] as? NSDictionary
                         
                         arrayContactosCentrosComunitarios.append((CentrosComunitarios(nombre: jsonCentro["nombre"] as? String, fechaRegistro: jsonCentro["fechaRegistro"] as? String, habilitado: jsonCentro["habilitado"] as? Bool, identifier: jsonCentro["identifier"] as? Int, telefono: contacto!["telefono"] as? String, correo: contacto!["email"] as? String, _links: jsonCentro["_links"] as? NSDictionary, direccion: direccion)))
                         
@@ -319,8 +318,11 @@ class ApiConnector {
                     
                     for almacenActual in almacenes {
                         let jsonBanco:Dictionary<String, AnyObject> = almacenActual as! Dictionary<String, AnyObject>
-                       
-                        arrayContactosCentrosAcopio.append(CentrosAcopio(bancosAlimentos: jsonBanco["bancoAlimentos"] as? NSDictionary, _links: jsonBanco["_links"] as? NSDictionary, direccion: jsonBanco["_links"] as? NSDictionary))
+                        
+                        let contacto = jsonBanco["contacto"] as? NSDictionary
+                        let direccion = jsonBanco["direccion"] as? NSDictionary
+                        
+                        arrayContactosCentrosAcopio.append(CentrosAcopio(nombre: contacto!["nombre"] as? String, fechaRegistro: contacto!["fechaRegistro"] as? String, habilitado: contacto!["habilitado"] as? Bool, identifier: contacto!["identifier"] as? Int, telefono: contacto!["telefono"] as? String, correo: contacto!["email"] as? String, _links: jsonBanco["_links"] as? NSDictionary, direccion: direccion))
                         
                     }
                     
@@ -409,21 +411,15 @@ class ApiConnector {
                 contactosAcopio.removeAll()
                 
                 var x = 0
-                for contacto in acopio {
+                for _ in acopio {
                     
-                    let nombre = contacto.bancosAlimentos!["nombre"] as? String
+                    let nombre = acopio[x].nombre
                     let nombreArr = nombre?.components(separatedBy: " ")
                     let segundaInicial = nombreArr?.last?.first
-
+                    
                     let firstCharecter = "\(String(describing: nombreArr![0].first!))\(String(describing: segundaInicial!))"  //.key.first
                     
-                    guard let tel = contacto.bancosAlimentos!["telefono"] as? String else { return }
-                    guard let cor = contacto.bancosAlimentos!["email"] as? String else { return }
-
-                    let telefono = "Tel: \(String(describing: tel))"
-                    let correo = "Correo: \(String(describing: cor))"
-                    
-                    contactosAcopio.append(Contacto(inicial: "\(firstCharecter.uppercased())", nombreContacto: nombre, direccionContacto: telefono, beneficiariosContacto: correo, identificador: "CentroAcopio"))
+                    contactosAcopio.append(Contacto(inicial: "\(firstCharecter.uppercased())", nombreContacto: nombre, direccionContacto: "Tel: \(acopio[x].telefono ?? "")", beneficiariosContacto: "Correo: \(acopio[x].correo ?? "")", identificador: "CentroAcopio"))
 
                     x = x + 1
                 }
@@ -480,7 +476,7 @@ class ApiConnector {
         
         arrayBenefactores.removeAll()
         
-        let urlBenefactores = "\(urlBase)benefactores"
+        let urlBenefactores = "\(urlBase)Benefactores"
         
         guard let url = URL(string: urlBenefactores) else { return }
         
@@ -499,64 +495,59 @@ class ApiConnector {
                 
             }
             
+            let statusCode = self.urlResponse(response: response)        //cachar el error
+            
+            if statusCode != 200 {
+                completionError()
+                return
+            }
+            
             do {
                 let json = try JSONSerialization.jsonObject(with: contactData, options: JSONSerialization.ReadingOptions.mutableLeaves)
                 
-                let dico = json as! NSDictionary
+                let benefactores = json as! NSArray
                 
-                //Si el token es inválido
-                if let err = dico["error"] {
-                    self.errorDescription = err as? String
-                    completionError()
-                } else {
+                for almacenActual in benefactores {
+                    let jsonBenefactor:Dictionary<String, AnyObject> = almacenActual as! Dictionary<String, AnyObject>
                     
-                    let _embedded = dico["_embedded"] as! NSDictionary
+                    let contacto = jsonBenefactor["contacto"] as? NSDictionary ?? nil
                     
-                    let benefactores = _embedded["benefactores"] as! NSArray
+                    let nombreC = contacto?["nombre"] as? String ?? ""
                     
-                    for almacenActual in benefactores {
-                        let jsonBanco:Dictionary<String, AnyObject> = almacenActual as! Dictionary<String, AnyObject>
-                        
-                        let razonSocial = jsonBanco["razonSocial"] as? String ?? jsonBanco["nombre"] as! String //if razonSocial is null
-                        
-                        let contacto = jsonBanco["contacto"] as? NSDictionary ?? nil
-                        
-                        let nombreC = contacto?["nombre"] as? String ?? ""
-                        
-                        let fechaRegistro = contacto?["fechaRegistro"] as? String
-                        
-                        var fecha = String()
-                        if fechaRegistro != nil {
-                            let fechaRegistroArr = fechaRegistro?.components(separatedBy: "T")
-                            let fechaCompletaArr = fechaRegistroArr![0].components(separatedBy: "-")
-                            fecha = "\(fechaCompletaArr[2])/\(fechaCompletaArr[1])/\(fechaCompletaArr[0])"
-                        }
-                        
-                        let telefono = contacto?["telefono"] as? String ?? ""
-                        let email = contacto?["email"] as? String ?? ""
-                        
-                        let direccion = jsonBanco["direccion"] as! NSDictionary
-                        
-                        let calle = direccion["calle"] as? String
-                        let numero = direccion["numero"] as? String
-                        
-                        let domicilio = "\(calle ?? "") \(numero ?? "")"
-                        
-                        let ciudad = direccion["ciudad"] as? String
-                        let colonia = direccion["colonia"] as? String
-                        let estado = direccion["estado"] as? String
-                        let cp = direccion["cp"] as? String
-                        
-                        
-                        let id = jsonBanco["id"] as! Int
-                        let nombre = jsonBanco["nombre"] as! String
-                        
-                        arrayBenefactores.append(Benefactor(id: id, nombre: nombre, razonSocial: razonSocial, nombreContacto: nombreC, domicilio: domicilio, ciudad: ciudad!, colonia: colonia!, estado: estado!, cp: cp!, telefono: telefono, email: email, fecha: fecha))
-                        
+                    let fechaRegistro = contacto?["fechaRegistro"] as? String
+                    
+                    var fecha = String()
+                    if fechaRegistro != nil {
+                        let fechaRegistroArr = fechaRegistro?.components(separatedBy: "T")
+                        let fechaCompletaArr = fechaRegistroArr![0].components(separatedBy: "-")
+                        fecha = "\(fechaCompletaArr[2])/\(fechaCompletaArr[1])/\(fechaCompletaArr[0])"
                     }
                     
-                    completionSucces(arrayBenefactores)
+                    let telefono = contacto?["telefono"] as? String ?? ""
+                    let email = contacto?["email"] as? String ?? ""
+                    
+                    let direccion = jsonBenefactor["direccion"] as! NSDictionary
+                    
+                    let calle = direccion["calle"] as? String
+                    let numero = direccion["numero"] as? String
+                    
+                    let domicilio = "\(calle ?? "") \(numero ?? "")"
+                    
+                    let ciudad = direccion["ciudad"] as? String
+                    let colonia = direccion["colonia"] as? String
+                    let estado = direccion["estado"] as? String
+                    let cp = direccion["cp"] as? String
+                    
+                    
+                    
+                    let razonSocial = jsonBenefactor["razonSocial"] as? String ?? "" //if razonSocial is null
+                    let nombre = jsonBenefactor["nombre"] as? String ?? ""
+                    let id = jsonBenefactor["id"] as? Int ?? 0
+                    
+                    arrayBenefactores.append(Benefactor(id: id, nombre: nombre, razonSocial: razonSocial, nombreContacto: nombreC, domicilio: domicilio, ciudad: ciudad!, colonia: colonia!, estado: estado!, cp: cp!, telefono: telefono, email: email, fecha: fecha))
                 }
+                
+                completionSucces(arrayBenefactores)
                 
             } catch let jsonErr {
                 print("Error serializing json:", jsonErr)
@@ -566,13 +557,53 @@ class ApiConnector {
             }.resume()
     }
     
-    func editBenefactores(id: Int, calle: String, numero: String, ciudad: String, estado: String, colonia: String, cp: String, razonSocial: String, edad: String, nombre: String, completionSucces: @escaping () -> Void, completionError: @escaping (String) -> ()) {
+    func newBenefactores(id: Int, calle: String, numero: String, ciudad: String, estado: String, colonia: String, cp: String, razonSocial: String, edad: String, nombre: String, telefono: String, correo: String, completionSucces: @escaping () -> Void, completionError: @escaping (String) -> ()) {
         
-        let urlBenefactores = "\(urlBase)benefactores/\(id)"
+        let urlBenefactores = "\(urlBase)Benefactores"
         
         guard let url = URL(string: urlBenefactores) else { return }
         
-        let json:String = "{\"direccion\" : { \"calle\" : \"\(calle)\", \"numero\" : \"\", \"ciudad\" : \"\(ciudad)\", \"estado\" : \"\(estado)\", \"latitud\" : \"\", \"longitud\" : \"\", \"colonia\" : \"\(colonia)\", \"cp\" : \"\(cp)\"}, \"nombre\" : \"\(nombre)\", \"razonSocial\" : \"\(razonSocial)\"}"
+        let json:String = "{\"contacto\": {\"id\": \(id),\"valor\": \"1\",\"nombre\": \"\(nombre)\",\"apellido\": \"\",\"telefono\": \"\(telefono)\",\"extension\": 0,\"celular\": \"\",\"email\": \"\(correo)\",\"grupo\": 0,\"fechaRegistro\": \"\",\"habilitado\": true,\"datosExtra\": \"{}\",\"identifier\": 1,\"tipoContacto\": \"PERSONAL\"},\"direccion\": {\"calle\": \"\(calle)\",\"numero\": \"\",\"ciudad\": \"\(ciudad)\",\"estado\": \"\(estado)\",\"latitud\": \"\",\"longitud\": \"\",\"colonia\": \"\(colonia)\",\"identifier\": 1,\"cp\": \"\(cp)\"},\"nombre\": \"\(razonSocial)\",\"razonSocial\": \"\(razonSocial)\"}"
+        
+        let request = post(json: json, requestUrl: url, isLogin: false)
+        
+        URLSession.shared.dataTask(with: request) { (data, response, err) in
+            if let err = err {
+                print("Error:", err)        //poner en un alertView              *****
+                completionError("\(err)")
+                return
+            }
+            
+            guard let contactData = data else {
+                completionError("Error, intente más tarde")
+                return
+                
+            }
+            
+            
+            if let httpStatus = response as? HTTPURLResponse , httpStatus.statusCode != 200
+            {           // check for http errors
+                print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                print("response = \(String(describing: response))")
+                
+                print("Error del servidor, intente más tarde")
+                completionError("Error del servidor, intente más tarde")
+                
+            } else {
+                
+                completionSucces()
+            }
+            
+            }.resume()
+    }
+    
+    func editBenefactores(id: Int, calle: String, numero: String, ciudad: String, estado: String, colonia: String, cp: String, razonSocial: String, edad: String, nombre: String, telefono: String, correo: String, completionSucces: @escaping () -> Void, completionError: @escaping (String) -> ()) {
+        
+        let urlBenefactores = "\(urlBase)Benefactores/\(id)"
+        
+        guard let url = URL(string: urlBenefactores) else { return }
+        
+        let json:String = "{\"contacto\": {\"id\": \(id),\"valor\": \"1\",\"nombre\": \"\(nombre)\",\"apellido\": \"\",\"telefono\": \"\(telefono)\",\"extension\": 0,\"celular\": \"\",\"email\": \"\(correo)\",\"grupo\": 0,\"fechaRegistro\": \"\",\"habilitado\": true,\"datosExtra\": \"{}\",\"tipoContacto\": \"PERSONAL\"},\"direccion\": {\"id\": \(id),\"calle\": \"\(calle)\",\"numero\": \"\",\"ciudad\": \"\(ciudad)\",\"estado\": \"\(estado)\",\"latitud\": \"\",\"longitud\": \"\",\"colonia\": \"\(colonia)\",\"cp\": \"\(cp)\"},\"nombre\": \"\(razonSocial)\",\"razonSocial\": \"\(razonSocial)\"}"
         
         let request = put(json: json, requestUrl: url)
         
@@ -588,7 +619,6 @@ class ApiConnector {
                 return
                 
             }
-            
             
             if let httpStatus = response as? HTTPURLResponse , httpStatus.statusCode != 200
             {           // check for http errors
@@ -672,8 +702,8 @@ class ApiConnector {
                         let telefonoUsuario = bancoAlimentos!["telefono"] as? String
                         
                         let direccion = bancoAlimentos!["direccion"] as? NSDictionary
-                        let calle = direccion!["calle"] as? String
-                        let numero = direccion!["numero"] as? String
+                        let calle = "" //direccion!["calle"] as? String
+                        let numero = "" //direccion!["numero"] as? String
                         
                         let direccionUsuario = "\(calle ?? "") #\(numero ?? "")"
                         
@@ -1111,16 +1141,22 @@ class ApiConnector {
     }
     
     // MARK: - Post
-    func post(json: String, requestUrl: URL) -> URLRequest {
+    func post(json: String, requestUrl: URL, isLogin: Bool) -> URLRequest {
         
         var request = URLRequest(url:requestUrl)
         
         request.httpMethod = "POST"
         
         //Agrega encabezados
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        request.setValue("Basic dXNlcjpwYXNzd29yZA==", forHTTPHeaderField: "Authorization")
-        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        if isLogin {
+            request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            request.setValue("Basic dXNlcjpwYXNzd29yZA==", forHTTPHeaderField: "Authorization")
+            request.setValue("application/json", forHTTPHeaderField: "Accept")
+        } else {
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue("Bearer \(String(describing: self.accessToken!))", forHTTPHeaderField: "Authorization")
+        }
+        
         request.httpBody = json.data(using: String.Encoding.utf8)
         
         return request
@@ -1158,7 +1194,7 @@ class ApiConnector {
     // MARK: - Response
     func urlResponse(response: URLResponse?) -> Int {
         //obtener la cookie
-        var statusCode = Int()
+        var statusCode = 200
         
         //Si statusCode es diferente a 200 se originó un error y se le notificará al usuario
         if let httpStatus = response as? HTTPURLResponse , httpStatus.statusCode != 200

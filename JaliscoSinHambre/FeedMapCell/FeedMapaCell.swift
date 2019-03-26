@@ -45,7 +45,7 @@ class FeedMapaCell: BaseCell, UICollectionViewDelegate, UICollectionViewDataSour
         let firstCharecter = nombreContacto.first //.key.first
         
         for _ in 1...14 {
-            contactos.append(Contacto(inicial: "\(firstCharecter!)", nombreContacto: nombreContacto, direccionContacto: "Calle: \(direccionContacto ?? "")", beneficiariosContacto: "CP: \(beneficiariosContacto ?? "")", identificador: "FeedCell"))
+            contactos.append(Contacto(inicial: "\(firstCharecter!)", nombreContacto: nombreContacto, direccionContacto: "Calle: \(direccionContacto)", beneficiariosContacto: "CP: \(beneficiariosContacto)", identificador: "FeedCell"))
         }
         
     }

@@ -96,7 +96,7 @@ class SolicitudRecoleccionVC: UIViewController, UICollectionViewDelegate, UIColl
                     }, completionError: {
                         DispatchQueue.main.async {
                             if apiConnector.errorDescription != nil {
-                                print(apiConnector.errorDescription!)
+                                print("ErrorMessage", apiConnector.errorDescription!)
                                 
                             } else {
                                 print("Error al cargar entrada almacen")
@@ -122,10 +122,13 @@ class SolicitudRecoleccionVC: UIViewController, UICollectionViewDelegate, UIColl
                 
                 if apiConnector.errorDescription != nil {
                     print(apiConnector.errorDescription!)
+                    errorMsg = apiConnector.errorDescription ?? "Error"
                     
-                    let loginController = LoginVC()
-                    let navController = UINavigationController(rootViewController: loginController)
-                    UIApplication.shared.keyWindow?.rootViewController?.present(navController, animated: true, completion: nil)
+                    if apiConnector.errorDescription == "invalid_token" {
+                        let loginController = LoginVC()
+                        let navController = UINavigationController(rootViewController: loginController)
+                        UIApplication.shared.keyWindow?.rootViewController?.present(navController, animated: true, completion: nil)
+                    }
                     
                 } else {
                     print("Error al cargar solicitud de recoleccion")

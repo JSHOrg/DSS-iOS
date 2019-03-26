@@ -71,9 +71,9 @@ class BenefactoresVC: UIViewController, UICollectionViewDelegate, UICollectionVi
                 
                 for ben in benefactor {
                     
-                    let firstCharecter = ben.razonSocial?.first
+                    let firstCharecter = "\(String(describing: ben.razonSocial?.first ?? "-"))"
                     
-                    contactoBenefactor.append(Contacto(inicial: "\(firstCharecter!)", nombreContacto: ben.razonSocial!, direccionContacto: "Correo: \(ben.email!)", beneficiariosContacto: "Registrado: \(ben.fecha!)", identificador: "Benefactor"))
+                    contactoBenefactor.append(Contacto(inicial: "\(firstCharecter)", nombreContacto: ben.razonSocial!, direccionContacto: "Correo: \(ben.email ?? "")", beneficiariosContacto: "Registrado: \(ben.fecha ?? "-")", identificador: "Benefactor"))
                 }
                 
                 self.activityIndicator.stopAnimating()
@@ -90,10 +90,13 @@ class BenefactoresVC: UIViewController, UICollectionViewDelegate, UICollectionVi
                 
                 if apiConnector.errorDescription != nil {
                     print(apiConnector.errorDescription!)
+                    errorMsg = apiConnector.errorDescription ?? "Error"
                     
-                    let loginController = LoginVC()
-                    let navController = UINavigationController(rootViewController: loginController)
-                    UIApplication.shared.keyWindow?.rootViewController?.present(navController, animated: true, completion: nil)
+                    if apiConnector.errorDescription == "invalid_token" {
+                        let loginController = LoginVC()
+                        let navController = UINavigationController(rootViewController: loginController)
+                        UIApplication.shared.keyWindow?.rootViewController?.present(navController, animated: true, completion: nil)
+                    }
                     
                 } else {
                     errorMsg = "Error al cargar datos"
