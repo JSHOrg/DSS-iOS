@@ -23,7 +23,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Nombre de usuario"
-        textField.text = "alejandro"        // FIXME : quitar
+        textField.text = ""
         textField.underlined()
         textField.autocorrectionType = .no
         textField.autocapitalizationType = .none
@@ -37,7 +37,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Contraseña"
-        textField.text = "passwd1"  // FIXME : quitar
+        textField.text = ""
         textField.underlined()
         textField.autocorrectionType = .no
         textField.autocapitalizationType = .none
