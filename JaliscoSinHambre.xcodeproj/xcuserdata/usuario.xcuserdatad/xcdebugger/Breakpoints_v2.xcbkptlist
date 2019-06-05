@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JaliscoSinHambre/ApiConnector.swift"
-            timestampString = "581449312.520462"
+            timestampString = "581450155.660697"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "563"
-            endingLineNumber = "563"
+            startingLineNumber = "562"
+            endingLineNumber = "562"
             landmarkName = "newBenefactores(id:calle:numero:ciudad:estado:colonia:cp:razonSocial:edad:nombre:telefono:correo:completionSucces:completionError:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -74,7 +74,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JaliscoSinHambre/Acopio/Benefactores/An&#x303;adir Benefactor/An&#x303;adirBenefactorVC+Extension.swift"
-            timestampString = "581449312.520563"
+            timestampString = "581450155.661221"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "235"
