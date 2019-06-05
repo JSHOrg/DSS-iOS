@@ -15,7 +15,7 @@ class DetalleSolicitudVC: DetalleBenefactorVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .green
+        view.backgroundColor = .white
         
         setupNavigationController()
         setupDismissButtonWithTitle(title: "Detalle de solicitud")

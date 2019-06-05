@@ -27,12 +27,12 @@ class DetalleTransferenciaVC: DetalleBenefactorVC {
         
         if !detalleTransferenciaEntradaDict.isEmpty {
             
-            etiquetasArr = ["Nombre", "Dirección", "Teléfono", "Fecha de Entrada", "Producto ", "Cantidad", "Unidad", "Descripción", "Peso unitario", "Peso total"]
+            etiquetasArr = ["Nombre", "Dirección", "Teléfono", "Fecha de entrada", "Producto ", "Cantidad", "Unidad", "Descripción", "Peso unitario", "Peso total"]
             
             infoBenefactorArr = ["\(detalleTransferenciaEntradaDict.first?.nombreUsuario! ?? "-")", "\(detalleTransferenciaEntradaDict.first?.direccionUsuario ?? "-")", "\(detalleTransferenciaEntradaDict.first?.telefonoUsuario ?? "-")", "\(detalleTransferenciaEntradaDict.first?.fechaEntrada! ?? "-")", "\(detalleTransferenciaEntradaDict.first?.nombreProducto! ?? "-")", "\(detalleTransferenciaEntradaDict.first?.cantidadKg! ?? "-") Kg", "\(detalleTransferenciaEntradaDict.first?.cantidadPza! ?? "-") Pza", "\(detalleTransferenciaEntradaDict.first?.comentarios! ?? "-")", "\(detalleTransferenciaEntradaDict.first?.pesoUnitario! ?? Float(0.0)) Kg", "\(detalleTransferenciaEntradaDict.first?.pesoTotal! ?? 0) Kg"]
         } else {
             
-            etiquetasArr = ["Nombre", "Motivo", "Cantidad", "Fecha de Salida"]
+            etiquetasArr = ["Nombre", "Motivo", "Cantidad", "Fecha de salida"]
             
             infoBenefactorArr = ["\(detalleTransferenciaSalidaDict.first?.nombreUsuario! ?? "-")", "\(detalleTransferenciaSalidaDict.first?.motivo! ?? "-")", "\(detalleTransferenciaSalidaDict.first?.cantidad ?? "-")", "\(detalleTransferenciaSalidaDict.first?.fechaSalida! ?? "-")"]
         }

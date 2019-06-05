@@ -521,6 +521,7 @@ class ApiConnector {
                         let fechaRegistroArr = fechaRegistro?.components(separatedBy: "T")
                         let fechaCompletaArr = fechaRegistroArr![0].components(separatedBy: "-")
                         fecha = "\(fechaCompletaArr[2])/\(fechaCompletaArr[1])/\(fechaCompletaArr[0])"
+                        print("cp", fecha)
                     }
                     
                     let telefono = contacto?["telefono"] as? String ?? ""
@@ -563,7 +564,13 @@ class ApiConnector {
         
         guard let url = URL(string: urlBenefactores) else { return }
         
-        let json:String = "{\"contacto\": {\"id\": \(id),\"valor\": \"1\",\"nombre\": \"\(nombre)\",\"apellido\": \"\",\"telefono\": \"\(telefono)\",\"extension\": 0,\"celular\": \"\",\"email\": \"\(correo)\",\"grupo\": 0,\"fechaRegistro\": \"\",\"habilitado\": true,\"datosExtra\": \"{}\",\"identifier\": 1,\"tipoContacto\": \"PERSONAL\"},\"direccion\": {\"calle\": \"\(calle)\",\"numero\": \"\",\"ciudad\": \"\(ciudad)\",\"estado\": \"\(estado)\",\"latitud\": \"\",\"longitud\": \"\",\"colonia\": \"\(colonia)\",\"identifier\": 1,\"cp\": \"\(cp)\"},\"nombre\": \"\(razonSocial)\",\"razonSocial\": \"\(razonSocial)\"}"
+        let today = Date()
+        let format = DateFormatter()
+        format.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ" 
+        let formattedDate = format.string(from: today)
+        print("cp", today, formattedDate)
+        
+        let json:String = "{\"contacto\": {\"id\": \(id),\"valor\": \"1\",\"nombre\": \"\(nombre)\",\"apellido\": \"\",\"telefono\": \"\(telefono)\",\"extension\": 0,\"celular\": \"\",\"email\": \"\(correo)\",\"grupo\": 0,\"fechaRegistro\": \"\(formattedDate)\",\"habilitado\": true,\"datosExtra\": \"{}\",\"identifier\": 1,\"tipoContacto\": \"PERSONAL\"},\"direccion\": {\"calle\": \"\(calle)\",\"numero\": \"\",\"ciudad\": \"\(ciudad)\",\"estado\": \"\(estado)\",\"latitud\": \"\",\"longitud\": \"\",\"colonia\": \"\(colonia)\",\"identifier\": 1,\"cp\": \"\(cp)\"},\"nombre\": \"\(razonSocial)\",\"razonSocial\": \"\(razonSocial)\"}"
         
         let request = post(json: json, requestUrl: url, isLogin: false)
         
@@ -602,7 +609,7 @@ class ApiConnector {
         let urlBenefactores = "\(urlBase)Benefactores/\(id)"
         
         guard let url = URL(string: urlBenefactores) else { return }
-        
+        print("cp", cp)
         let json:String = "{\"contacto\": {\"id\": \(id),\"valor\": \"1\",\"nombre\": \"\(nombre)\",\"apellido\": \"\",\"telefono\": \"\(telefono)\",\"extension\": 0,\"celular\": \"\",\"email\": \"\(correo)\",\"grupo\": 0,\"fechaRegistro\": \"\",\"habilitado\": true,\"datosExtra\": \"{}\",\"tipoContacto\": \"PERSONAL\"},\"direccion\": {\"id\": \(id),\"calle\": \"\(calle)\",\"numero\": \"\",\"ciudad\": \"\(ciudad)\",\"estado\": \"\(estado)\",\"latitud\": \"\",\"longitud\": \"\",\"colonia\": \"\(colonia)\",\"cp\": \"\(cp)\"},\"nombre\": \"\(razonSocial)\",\"razonSocial\": \"\(razonSocial)\"}"
         
         let request = put(json: json, requestUrl: url)

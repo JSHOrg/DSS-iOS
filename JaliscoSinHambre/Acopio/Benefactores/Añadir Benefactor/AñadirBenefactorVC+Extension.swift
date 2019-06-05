@@ -251,12 +251,13 @@ extension AñadirBenefactorVC {
             })
             
         } else {
-            
+            print("cp", codigoPostal, detalleBenefactor.id!)
             apiConnector.editBenefactores(id: detalleBenefactor.id!, calle: domicilio, numero: "", ciudad: ciudad, estado: estado, colonia: colonia, cp: codigoPostal, razonSocial: razonSocial, edad: "", nombre: nombreContacto, telefono: telefono, correo: correo, completionSucces: {
                 
                 DispatchQueue.main.async{
                     print("entra")
                     
+                    print("cp", codigoPostal)
                     self.activityIndicator.stopAnimating()
                     self.navigationController?.popViewController(animated: true)
                 }
