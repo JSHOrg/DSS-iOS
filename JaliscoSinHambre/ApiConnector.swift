@@ -351,10 +351,16 @@ class ApiConnector {
                 var x = 0
                 for _ in bancos {
                     let nombre = bancos[x].nombre
-                    let nombreArr = nombre?.components(separatedBy: " ")
-                    let segundaInicial = nombreArr?.last?.first
+                    guard let nombreArr = nombre?.components(separatedBy: " ") else { return }
                     
-                    let firstCharecter = "\(String(describing: nombreArr![0].first!))\(String(describing: segundaInicial!))"  //.key.first
+                    var segundaInicial = String()
+                    if nombreArr.count > 1 {
+                        segundaInicial = "\(nombreArr.last?.first ?? "-")"
+                    } else {
+                        segundaInicial = ""
+                    }
+                    
+                    let firstCharecter = "\(String(describing: nombreArr[0].first!))\(String(describing: segundaInicial))"  //.key.first
                     
                     guard let tel = bancos[x].telefono else { return }
                     guard let cor = bancos[x].email else { return }
@@ -385,10 +391,16 @@ class ApiConnector {
                 var x = 0
                 for _ in centros {
                     let nombre = centros[x].nombre
-                    let nombreArr = nombre?.components(separatedBy: " ")
-                    let segundaInicial = nombreArr?.last?.first
+                    guard let nombreArr = nombre?.components(separatedBy: " ") else { return }
                     
-                    let firstCharecter = "\(String(describing: nombreArr![0].first!))\(String(describing: segundaInicial!))"  //.key.first
+                    var segundaInicial = String()
+                    if nombreArr.count > 1 {
+                        segundaInicial = "\(nombreArr.last?.first ?? "-")"
+                    } else {
+                        segundaInicial = ""
+                    }
+                    
+                    let firstCharecter = "\(String(describing: nombreArr[0].first!))\(String(describing: segundaInicial))"  //.key.first
                     
                     contactosCentros.append(Contacto(inicial: "\(firstCharecter.uppercased())", nombreContacto: nombre, direccionContacto: "Tel: \(centros[x].telefono ?? "")", beneficiariosContacto: "Correo: \(centros[x].correo ?? "")", identificador: "CentrosComunitarios"))
                     
@@ -414,10 +426,16 @@ class ApiConnector {
                 for _ in acopio {
                     
                     let nombre = acopio[x].nombre
-                    let nombreArr = nombre?.components(separatedBy: " ")
-                    let segundaInicial = nombreArr?.last?.first
+                    guard let nombreArr = nombre?.components(separatedBy: " ") else { return }
                     
-                    let firstCharecter = "\(String(describing: nombreArr![0].first!))\(String(describing: segundaInicial!))"  //.key.first
+                    var segundaInicial = String()
+                    if nombreArr.count > 1 {
+                        segundaInicial = "\(nombreArr.last?.first ?? "-")"
+                    } else {
+                        segundaInicial = ""
+                    }
+                    
+                    let firstCharecter = "\(String(describing: nombreArr[0].first!))\(String(describing: segundaInicial))"  //.key.first
                     
                     contactosAcopio.append(Contacto(inicial: "\(firstCharecter.uppercased())", nombreContacto: nombre, direccionContacto: "Tel: \(acopio[x].telefono ?? "")", beneficiariosContacto: "Correo: \(acopio[x].correo ?? "")", identificador: "CentroAcopio"))
 

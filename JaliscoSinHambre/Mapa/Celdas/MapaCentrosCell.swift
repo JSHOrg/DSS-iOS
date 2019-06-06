@@ -30,9 +30,15 @@ class MapaCentrosCell: FeedMapaCell {
             
             guard let nombre = direccionCentroComunitario.nombre else { return }
             let nombreArr = nombre.components(separatedBy: " ")
-            let segundaInicial = nombreArr.last?.first
             
-            let iniciales = "\(String(describing: nombreArr[0].first!))\(String(describing: segundaInicial!))"  //.key.first
+            var segundaInicial = String()
+            if nombreArr.count > 1 {
+                segundaInicial = "\(nombreArr.last?.first ?? "-")"
+            } else {
+                segundaInicial = ""
+            }
+            
+            let iniciales = "\(String(describing: nombreArr[0].first!))\(String(describing: segundaInicial))"  //.key.first
             
             self.contactos.append(Contacto(inicial: "\(iniciales.uppercased())", nombreContacto: direccionCentroComunitario.nombre, direccionContacto: "Calle: \(calle) #\(numero ?? "")", beneficiariosContacto: "CP: \(cp ?? "")", identificador: "MapaBancosAlimentos"))
             
@@ -45,7 +51,6 @@ class MapaCentrosCell: FeedMapaCell {
             guard let lon = longitud else { return }
             
             self.addAnnotation(lat: lat, lon: lon, nombre: nombre, direccion: direccion, iniciales: iniciales)
-            
             
         }
         

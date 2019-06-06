@@ -42,7 +42,7 @@ class EntradasAlmacenCell: FeedCell {
                             let nombre = producto.0
                             let nombreArr = nombre.components(separatedBy: " ")
                             
-                            let firstCharecter = "\(String(describing: nombreArr[0].first!))"
+                            let firstCharecter = "\(String(describing: nombreArr[0].first ?? "-"))"
                             
                             self.nombreContactoTransferencia.append(producto.5)
                             

@@ -25,12 +25,18 @@ class ProveedorCell: FeedCell {
                 
                 for pro in proveedor {
                     
-                    let nombreArr = pro.nombreProveedor?.components(separatedBy: " ")
+                    guard let nombreArr = pro.nombreProveedor?.components(separatedBy: " ") else { return }
                     
-                    let inicialNombre = nombreArr?.first?.first
-                    let inicialApellido = nombreArr?.last?.first
+                    let inicialNombre = nombreArr.first?.first
                     
-                    let firstCharecter = "\(String(describing: inicialNombre!))\(String(describing: inicialApellido!))"
+                    var inicialApellido = String()
+                    if nombreArr.count > 1 {
+                        inicialApellido = "\(nombreArr.last?.first ?? "-")"
+                    } else {
+                        inicialApellido = ""
+                    }
+                    
+                    let firstCharecter = "\(String(describing: inicialNombre!))\(String(describing: inicialApellido))"  //.key.first
                     
                     detalleProveedoresContactos.append(Contacto(inicial: "\(firstCharecter.uppercased())", nombreContacto: pro.nombreProveedor, direccionContacto: "Correo: \(pro.correoContactoProveedor ?? "")", beneficiariosContacto: "Tel: \(pro.telefonoContactoProveedor ?? "")", identificador: "Proveedor"))
                 }

@@ -121,7 +121,10 @@ class DetalleContactosVC: UIView, UICollectionViewDelegate, UICollectionViewData
                 guard let nombre = contactos["nombre"] as? String else { return }
                 guard let apellido = contactos["apellido"] as? String else { return }
                 
-                let iniciales = "\(String(describing: nombre.first!))\(String(describing: apellido.first!))"
+                let nombreValidado = nombre.isEmpty ? "" : "\(nombre.first!)"
+                let apellidoValidado = apellido.isEmpty ? "" : "\(apellido.first!)"
+                
+                let iniciales = "\(nombreValidado)\(apellidoValidado)"
                 
                 let nombreCompleto = "\(String(describing: nombre)) \(String(describing: apellido))"
                 

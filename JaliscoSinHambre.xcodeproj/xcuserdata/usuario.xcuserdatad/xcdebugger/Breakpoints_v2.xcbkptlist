@@ -22,27 +22,11 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JaliscoSinHambre/Agenda de contactos/Detalle contactos/DetalleContactosVC.swift"
-            timestampString = "571688425.551047"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
-            landmarkName = "fetchContactos()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JaliscoSinHambre/Mapa/Celdas/MapaBancosCell.swift"
-            timestampString = "581446538.985522"
+            timestampString = "581542526.720819"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "22"
@@ -58,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JaliscoSinHambre/ApiConnector.swift"
-            timestampString = "581450155.660697"
+            timestampString = "581542526.720892"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "562"
-            endingLineNumber = "562"
+            startingLineNumber = "580"
+            endingLineNumber = "580"
             landmarkName = "newBenefactores(id:calle:numero:ciudad:estado:colonia:cp:razonSocial:edad:nombre:telefono:correo:completionSucces:completionError:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -74,7 +58,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JaliscoSinHambre/Acopio/Benefactores/An&#x303;adir Benefactor/An&#x303;adirBenefactorVC+Extension.swift"
-            timestampString = "581450155.661221"
+            timestampString = "581542526.721301"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "235"

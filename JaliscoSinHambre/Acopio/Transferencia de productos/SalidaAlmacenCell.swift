@@ -25,9 +25,8 @@ class SalidaAlmacenCell: FeedCell {
                 for _ in salidas {
                     let nombre = salidas[x].nombreUsuario
                     let nombreArr = nombre?.components(separatedBy: " ")
-                    let segundaInicial = nombreArr?.last?.first
                     
-                    let firstCharecter = "\(String(describing: nombreArr![0].first!))\(String(describing: segundaInicial!))"  //.key.first
+                    let firstCharecter = "\(String(describing: nombreArr?[0].first ?? "-"))"
                     
                     guard let motivoSalida = salidas[x].motivo else { return }
                     guard let cantidadSalida = salidas[x].cantidad else { return }
