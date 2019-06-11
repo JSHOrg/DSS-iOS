@@ -736,7 +736,7 @@ class ApiConnector {
                         
                         let pesoUnitario = Float(cantidadKg!)! / Float(cantidadPza!)!
                         
-                        arrayEntradaAlmacen.append(EntradaAlmacen(nombreProducto: producto, nombreUsuario: nombreUsuario!, direccionUsuario: direccionUsuario, telefonoUsuario: telefonoUsuario!, folio: folio!, fechaEntrada: fecha, cantidadKg: cantidadKg!, cantidadPza: cantidadPza!, fechaConsumoLimite: fechaConsumoLimite!, pagoCosecha: pagoCosecha!, comentarios: comentarios!, cantidadBuenEstado: cantidadRecibidaBuenEstado!, costoOperativoAcopio: costoOperativoAcopio!, pesoUnitario: pesoUnitario, pesoTotal: Int(cantidadKg!), _links: _links))
+                        arrayEntradaAlmacen.append(EntradaAlmacen(nombreProducto: producto, nombreUsuario: nombreUsuario ?? "", direccionUsuario: direccionUsuario, telefonoUsuario: telefonoUsuario ?? "", folio: folio ?? "", fechaEntrada: fecha, cantidadKg: cantidadKg ?? "", cantidadPza: cantidadPza ?? "", fechaConsumoLimite: fechaConsumoLimite ?? "", pagoCosecha: pagoCosecha ?? 0, comentarios: comentarios ?? "", cantidadBuenEstado: cantidadRecibidaBuenEstado ?? "", costoOperativoAcopio: costoOperativoAcopio ?? "", pesoUnitario: pesoUnitario, pesoTotal: Int(cantidadKg ?? "0"), _links: _links))
                         
                         
                     }
@@ -820,7 +820,7 @@ class ApiConnector {
                 let transportesUnidades = donativo!["transportesUnidades"] as? NSDictionary
                 let tipoUnidad = transportesUnidades!["tipoUnidad"] as? String
                 
-                completionSucces((nombreProducto!, cantidadKg!, tipoUnidad!, domicilioAcopio, ciudadAcopio, nombreCompletoDonador))
+                completionSucces((nombreProducto ?? "", cantidadKg ?? "", tipoUnidad ?? "", domicilioAcopio, ciudadAcopio, nombreCompletoDonador))
                 
             } catch let jsonErr {
                 print("Error serializing json:", jsonErr.localizedDescription)
@@ -886,7 +886,7 @@ class ApiConnector {
                         let fecha = "\(fechaCompletaArr[2])/\(fechaCompletaArr[1])/\(fechaCompletaArr[0])"
                         
                         
-                        arraySalidaAlmacen.append(SalidaAlmacen(nombreUsuario: nombreUsuario!, cantidad: cantidad!, motivo: motivo!, fechaSalida: fecha))
+                        arraySalidaAlmacen.append(SalidaAlmacen(nombreUsuario: nombreUsuario ?? "", cantidad: cantidad ?? "", motivo: motivo ?? "", fechaSalida: fecha))
                         
                     }
                     

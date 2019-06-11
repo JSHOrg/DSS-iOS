@@ -18,6 +18,9 @@ extension LoginVC {
         cuentaTextField.delegate = self
         contraseñaTextField.delegate = self
         
+        cuentaTextField.text = "superAdmin"
+        contraseñaTextField.text = "pass1"
+        
         view.addSubview(jaliscoSinHambreIcon)
         view.addSubview(cuentaTextField)
         view.addSubview(contraseñaTextField)

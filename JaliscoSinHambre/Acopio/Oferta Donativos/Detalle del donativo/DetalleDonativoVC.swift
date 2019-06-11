@@ -82,7 +82,7 @@ class DetalleDonativoVC: UIViewController, UICollectionViewDelegate, UICollectio
         heightTopBar = UIApplication.shared.statusBarFrame.height + (self.navigationController?.navigationBar.frame.height)! + 50 //UIApplication.shared.statusBarFrame.maxY + 44 + 50
         bottomBar = self.tabBarController?.tabBar.frame.height
         
-        return CGSize(width: view.frame.width, height: view.frame.height - heightTopBar!)
+        return CGSize(width: view.frame.width, height: view.frame.height - heightTopBar! - 20)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

@@ -49,6 +49,12 @@ class AgendaContactosVC: UIViewController, UICollectionViewDataSource, UICollect
         return sb
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        collectionView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
